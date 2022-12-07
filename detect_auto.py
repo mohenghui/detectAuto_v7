@@ -1,6 +1,6 @@
 
 import cv2
-from git import Object
+# from git import Object
 import torch
 import torch.backends.cudnn as cudnn
 
@@ -9,7 +9,7 @@ from utils.datasets import letterbox
 from utils.general import check_img_size,non_max_suppression,scale_coords
 from utils.torch_utils import select_device,TracedModel
 import numpy as np
-from MvImport.MvCameraControl_class import *
+# from MvImport.MvCameraControl_class import *
 import os
 from tkinter import *
 from tkinter import filedialog
