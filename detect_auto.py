@@ -17,7 +17,7 @@ import natsort
 from os import getcwd
 from xml.etree import ElementTree as ET
 
-class Detector(Object):
+class Detector():
     def __init__(self,weights,device,half,augment,conf_thres,iou_thres,classes,agnostic_nms,img_size):
         # super(Detect_app,self).__init__()
         self.model=None
