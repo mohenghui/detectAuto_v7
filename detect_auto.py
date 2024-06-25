@@ -45,6 +45,7 @@ class Detector():
         self.flag = False
     def init_model(self):
         self.model=attempt_load(self.weights, map_location=self.device)
+        self.names = self.model.module.names if hasattr(self.model, 'module') else self.model.names
         if self.track:
             self.model = TracedModel(self.model, self.device, self.img_size)
         if self.half:
@@ -236,11 +237,14 @@ class Detector():
                     print(image_name+"已标注完成")
                     for coordinate in coordinates_list:
                         label_id = coordinate[4]
-                        if (self.predefined_classes.count(self.predefined_classes[label_id]) > 0):
-                            object_information = [int(coordinate[0]), int(coordinate[1]), int(coordinate[2]),
-                                                  int(coordinate[3]), self.predefined_classes[label_id]]
-                            if (self.objectList.count(object_information) == 0):
-                                self.create_object(annotation, object_information)
+                        # print(self.names[int(label_id)])
+                        class_name=self.names[int(label_id)]
+                        if class_name in self.predefined_classes:
+                            if (self.predefined_classes.count(class_name) > 0):
+                                object_information = [int(coordinate[0]), int(coordinate[1]), int(coordinate[2]),
+                                                         int(coordinate[3]), class_name]
+                                if (self.objectList.count(object_information) == 0):
+                                    self.create_object(annotation, object_information)
                     self.objectList = []
                     # 将树模型写入xml文件
                     tree = ET.ElementTree(annotation)
